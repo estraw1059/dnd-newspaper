@@ -1,4 +1,5 @@
 import React from 'react';
+import './NewsPaperOnlineArticle.css'
 
 type articleProps = {
     title: string;
@@ -8,9 +9,9 @@ type articleProps = {
 const NewsArticle = (props: articleProps) => {
     const { title, text } = props;
     return (
-        <div>
-            <h1>{title}</h1>
-            <p>{text}</p>    
+        <div className='textBox'>
+            <h1 className='text-3xl font-bold text-center mb-4'>{title}</h1>
+            <div className='text-gray-700 text-justify'>{text}</div>    
         </div>
     );
 };
