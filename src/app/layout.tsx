@@ -1,8 +1,5 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Waterdeep Times',
@@ -15,9 +12,9 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>
-        <nav className="bg-blue-500 p-4">
+    <html className="h-full" lang="en">
+      <body className="h-full">
+        <nav className="bg-blue-500 p-4  h-[74px]">
           <div className="container mx-auto">
               <div className="flex justify-between items-center">
                   <a href="#" className="text-white text-2xl font-semibold">Waterdeep Times</a>
@@ -27,7 +24,9 @@ export default function RootLayout({
               </div>
           </div>
         </nav>
-        {children}
+        <div className="h-[calc(100vh-74px)]">
+          {children}
+        </div>
       </body>
     </html>
   )

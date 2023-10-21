@@ -8,7 +8,7 @@ export default function Home() {
     //     <NewsArticle text='Basic New article with some text' title='Dragon Fights Spotted'/>
     //   </div>
     // </main>
-    <main>
+    <main className="h-full">
       <NewsPaperFullPageOnline/>
     </main>
   );
