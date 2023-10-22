@@ -20,6 +20,7 @@
   .fp-cell {
     background-color: #fff;
     padding: 16px;
+    height:100%;
   }
   
   .fp-cell--1 {
@@ -47,5 +48,6 @@
   .textBox {
     height: 100%;
     width: 100%;
+    margin: 50px;
   }
   
