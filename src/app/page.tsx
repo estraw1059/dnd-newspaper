@@ -1,5 +1,12 @@
-import NewsArticle from "@/components/NewsArticle";
+'use client'
 import NewsPaperFullPageOnline from "@/components/NewsPaperFullPageOnline";
+import PasswordLockUp from "@/components/PasswordLockUp";
+
+// // This gets called on every request
+// export async function getServerSideProps() {
+//   // Fetch data from external API
+  
+// }
 
 export default function Home() {
   return (
@@ -9,6 +16,7 @@ export default function Home() {
     //   </div>
     // </main>
     <main className="h-full">
+      <PasswordLockUp/>
       <NewsPaperFullPageOnline/>
     </main>
   );
