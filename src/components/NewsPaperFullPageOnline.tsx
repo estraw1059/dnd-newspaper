@@ -1,9 +1,9 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import NewsArticle from './NewsArticle';
 import './NewsPaperOnlineArticle.css'
 import { db }  from "../firebase";
-import { query, collection, getDocs, DocumentData } from "firebase/firestore";
+import { query, where, collection, getDocs, DocumentData } from "firebase/firestore";
 
 type articleDoc = {
     articlePassword: string;
@@ -12,14 +12,24 @@ type articleDoc = {
     articleTitle: string;
 }
 
-const NewsPaperFullPageOnline = () => {
+type PaperProps = {
+    setPassword: Dispatch<SetStateAction<string | undefined>>;
+    password: string | undefined;
+}
+
+const NewsPaperFullPageOnline = (props: PaperProps) => {
+    const {password, setPassword} = props;
     const [articles, setArticles] = useState<articleDoc[]>([]);
 
 
     useEffect(() => {
+        if (password === undefined) {
+            setArticles([]);
+            return;
+        }
         // Fetch data and set the state within the useEffect.
         const fetchData = async () => {
-            const q = query(collection(db, "articles"));
+            const q = query(collection(db, "articles"), where('articlePassword', '==', password));
             const querySnapshot = await getDocs(q);
     
             const tempDocs: articleDoc[] = [];
@@ -33,7 +43,7 @@ const NewsPaperFullPageOnline = () => {
     
         fetchData(); // Call the fetchData function within the useEffect.
     
-    }, []);
+    }, [password]);
 
     const articleComp = articles.map((article: articleDoc) => {
         return (

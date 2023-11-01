@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 
+type PasswordLockupProps = {
+    setPassword: Dispatch<SetStateAction<string | undefined>>;
+    password: string | undefined;
+}
 
-const PasswordLockUp = () => {
-    const [password, setPassword] = useState(undefined);
+const PasswordLockUp = (props: PasswordLockupProps) => {
+    const {password, setPassword} = props;
     const [show, setShow] = useState(true);
 
     const handlePasswordChange = (e) => {
