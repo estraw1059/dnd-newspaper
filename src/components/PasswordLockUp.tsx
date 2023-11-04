@@ -9,10 +9,10 @@ const PasswordLockUp = (props: PasswordLockupProps) => {
     const {password, setPassword} = props;
     const [show, setShow] = useState(true);
 
-    const handlePasswordChange = (e) => {
+    const handlePasswordChange = (e: any) => {
       };
     
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: any) => {
     e.preventDefault();
     setPassword(e.target[0].value);
     setShow(false);
