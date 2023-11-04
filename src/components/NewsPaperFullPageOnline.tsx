@@ -36,8 +36,6 @@ const NewsPaperFullPageOnline = (props: PaperProps) => {
             querySnapshot.forEach((doc: DocumentData) => {
                 tempDocs.push(doc.data());
             });
-    
-            console.log('Setting tempDocs to ', tempDocs);
             setArticles(tempDocs);
         };
     
