@@ -3,7 +3,7 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import NewsArticle from './NewsArticle';
 import './NewsPaperOnlineArticle.css'
 import { db }  from "../firebase";
-import { query, where, collection, getDocs, DocumentData } from "firebase/firestore";
+import { query, where, orderBy, collection, getDocs, DocumentData } from "firebase/firestore";
 
 type articleDoc = {
     articlePassword: string;
@@ -29,14 +29,15 @@ const NewsPaperFullPageOnline = (props: PaperProps) => {
         }
         // Fetch data and set the state within the useEffect.
         const fetchData = async () => {
-            const q = query(collection(db, "articles"), where('articlePassword', '==', password));
+            const q = query(collection(db, "articles"), where('articlePassword', '==', password), orderBy("articleNumber"));
             const querySnapshot = await getDocs(q);
     
             const tempDocs: articleDoc[] = [];
             querySnapshot.forEach((doc: DocumentData) => {
                 tempDocs.push(doc.data());
+                console.log(tempDocs)
             });
-            setArticles(tempDocs);
+            await setArticles(tempDocs);
         };
     
         fetchData(); // Call the fetchData function within the useEffect.
@@ -59,21 +60,21 @@ const NewsPaperFullPageOnline = (props: PaperProps) => {
         <div className="container">
             <div className="frontpage text-[#000000]">
                 <div className="fp-cell fp-cell--1">
-                    {articleComp[0]}
+                    {articleComp[3]}
                 </div>
                 <div className="fp-cell fp-cell--2">
                     <div className="fp-cell fp-cell--1">
-                        {articleComp[1]}
+                        {articleComp[0]}
                     </div>
                 </div>
                 <div className="fp-cell fp-cell--3">
                     <div className="fp-cell fp-cell--1">
-                        {articleComp[2]}
+                        {articleComp[1]}
                     </div>
                 </div>
                 <div className="fp-cell fp-cell--4">
                     <div className="fp-cell fp-cell--1">
-                        {articleComp[3]}
+                        {articleComp[2]}
                     </div>
                 </div>
             </div>
