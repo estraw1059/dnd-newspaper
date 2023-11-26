@@ -1,7 +1,12 @@
 "use client"
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 
-const ArticleForm = () => {
+type articleFormProps = {
+  articleNumber: number;
+}
+
+const ArticleForm = (props: articleFormProps) => {
+    const { articleNumber } = props;
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
   
@@ -22,6 +27,7 @@ const ArticleForm = () => {
     };
     return (
         <form onSubmit={handleSubmit}>
+        <div>Enter Info for Article {articleNumber}</div>
         <div>
           <label htmlFor="articleTitle">Article Title:</label>
           <input
