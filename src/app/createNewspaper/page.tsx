@@ -1,11 +1,20 @@
-import React from 'react';
-import ArticleForm from '@/components/createArticleForm/ArticleForm';
+"use client"
+import React, { useEffect, useState } from 'react';
+import ArticleForm, { Article } from '@/components/createArticleForm/ArticleForm';
 
 const page = () => {
+    const [articleNumber, setArticleNumber] = useState(0);
+    const [articleList, setArticleList] = useState<Article[]>([]);
+    useEffect(() => {
+        if (articleNumber !== 4) {
+            return;
+        }
+        // We will need create the new newspaper
+        console.log(articleList);
+    }, [articleNumber])
     return (
         <div>
-            This is where I will create a new newspaper
-            <ArticleForm articleNumber={1}/>
+            <ArticleForm articleNumber={articleNumber} setArticleNumber={setArticleNumber} setArticleList={setArticleList}/>
         </div>
     );
 };

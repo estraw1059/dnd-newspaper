@@ -1,12 +1,19 @@
 "use client"
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 
+export type Article = {
+  articleTitle: string;
+  articleText: string;
+}
+
 type articleFormProps = {
   articleNumber: number;
+  setArticleNumber: React.Dispatch<React.SetStateAction<number>>;
+  setArticleList: React.Dispatch<React.SetStateAction<Article[]>>;
 }
 
 const ArticleForm = (props: articleFormProps) => {
-    const { articleNumber } = props;
+    const { articleNumber, setArticleNumber, setArticleList } = props;
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
   
@@ -17,17 +24,28 @@ const ArticleForm = (props: articleFormProps) => {
     const handleContentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
       setContent(e.target.value);
     };
+
+    const resetAndInc = () => {
+      setArticleNumber(tempArticleNumber => tempArticleNumber + 1);
+      setTitle('');
+      setContent('');
+    }
   
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       // Perform actions with collected data (e.g., submit to a server, etc.)
       console.log('Article Title:', title);
       console.log('Article Content:', content);
+      setArticleList(currentArticleList => [...currentArticleList, {articleText: content, articleTitle: title}]);
+      
       // You can add further logic here to handle form submission
+      
+
+      resetAndInc();
     };
     return (
         <form onSubmit={handleSubmit}>
-        <div>Enter Info for Article {articleNumber}</div>
+        <div>Enter Info for Article {articleNumber + 1}</div>
         <div>
           <label htmlFor="articleTitle">Article Title:</label>
           <input
