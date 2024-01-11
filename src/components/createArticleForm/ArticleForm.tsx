@@ -4,6 +4,7 @@ import React, { ChangeEvent, FormEvent, useState } from 'react';
 export type Article = {
   articleTitle: string;
   articleText: string;
+  articleNumber: number;
 }
 
 type articleFormProps = {
@@ -36,7 +37,7 @@ const ArticleForm = (props: articleFormProps) => {
       // Perform actions with collected data (e.g., submit to a server, etc.)
       console.log('Article Title:', title);
       console.log('Article Content:', content);
-      setArticleList(currentArticleList => [...currentArticleList, {articleText: content, articleTitle: title}]);
+      setArticleList(currentArticleList => [...currentArticleList, {articleText: content, articleTitle: title, articleNumber: (articleNumber + 1)}]);
       
       // You can add further logic here to handle form submission
       
