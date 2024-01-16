@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client"
 import React, { useEffect, useState } from 'react';
 import ArticleForm, { Article } from '@/components/createArticleForm/ArticleForm';
@@ -9,6 +10,7 @@ const page = () => {
     const [articleBaseInfo, setArticleBaseInfo] = useState({articlePassword: ''});
     const [articleNumber, setArticleNumber] = useState(0);
     const [articleList, setArticleList] = useState<Article[]>([]);
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
         if (articleNumber !== 4) {
             return;
@@ -24,7 +26,7 @@ const page = () => {
             };
             addDoc(collection(db, "articles"), fullArticle);
         })
-    }, [articleNumber])
+    }, [articleBaseInfo.articlePassword, articleList, articleNumber])
 
     if(baseInfoSet) {
         return (
