@@ -1,22 +1,21 @@
 "use client"
-import React, {useState} from "react";
-import {auth} from "../../Firebase";
+import React, {ChangeEvent, FormEvent, useState} from "react";
+import {auth} from "../../firebase";
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { Button, Container } from "react-bootstrap";
 
 const AdminLogin = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
   
-    const handleEmailChange = (e) => {
+    const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
       setEmail(e.target.value);
     };
   
-    const handlePasswordChange = (e) => {
+    const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
       setPassword(e.target.value);
     };
   
-    const handleLogin = (e) => {
+    const handleLogin = (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
   
       // Call Firebase's signInWithEmailAndPassword method to authenticate the user
@@ -32,19 +31,6 @@ const AdminLogin = () => {
         });
     };
 
-    const logout = () => {
-      signOut(auth).then(() => {
-        navigate('/admin/login')
-      })
-    }
-  
-    if (auth.currentUser != null) {
-      return (
-        <Container>
-            <Button onClick={logout} className='m-2'>Log Out</Button>
-        </Container>
-      )
-    }
 
     return (
       <div className="h-full">

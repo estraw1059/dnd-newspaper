@@ -45,18 +45,19 @@ const ArticleForm = (props: articleFormProps) => {
       resetAndInc();
     };
     return (
+      <div className="max-w-md mx-auto p-10 m-10 bg-slate-600">
         <form onSubmit={handleSubmit}>
-        <div>Enter Info for Article {articleNumber + 1}</div>
-        <div>
-          <label htmlFor="articleTitle">Article Title:</label>
-          <input
-            type="text"
-            id="articleTitle"
-            value={title}
-            onChange={handleTitleChange}
-            className="border border-gray-300 rounded-md p-2 w-full mt-1 text-black"
-          />
-        </div>
+          <div>Enter Info for Article {articleNumber + 1}</div>
+          <div>
+            <label htmlFor="articleTitle">Article Title:</label>
+            <input
+              type="text"
+              id="articleTitle"
+              value={title}
+              onChange={handleTitleChange}
+              className="border border-gray-300 rounded-md p-2 w-full mt-1 text-black"
+            />
+         </div>
         <div>
           <label htmlFor="articleContent">Article Content:</label>
           <textarea
@@ -69,7 +70,8 @@ const ArticleForm = (props: articleFormProps) => {
           />
         </div>
         <button type="submit">Submit</button>
-      </form>
+        </form>
+      </div>
     );
 };
 

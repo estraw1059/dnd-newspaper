@@ -26,19 +26,21 @@ const ArticleBaseInfo = (props: articleBaseProps) => {
       setBaseInfo(false);
     };
     return (
+      <div className="max-w-md mx-auto p-10 m-10 bg-slate-600">
         <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="pagePassword">Enter Page Password:</label>
-          <input
-            type="text"
-            id="pagePassword"
-            value={articleBaseInfo.articlePassword}
-            onChange={handlePasswordChange}
-            className="border border-gray-300 rounded-md p-2 w-full mt-1 text-black"
-          />
-        </div>
-        <button type="submit">Submit</button>
-      </form>
+          <div className="mb-5">
+            <label htmlFor="pagePassword">Enter Page Password:</label>
+            <input
+              type="text"
+              id="pagePassword"
+              value={articleBaseInfo.articlePassword}
+              onChange={handlePasswordChange}
+              className="border border-gray-300 rounded-md p-2 w-full mt-1 text-black"
+            />
+          </div>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
     );
 };
 
