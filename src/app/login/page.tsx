@@ -33,7 +33,7 @@ const AdminLogin = () => {
 
 
     return (
-      <div className="h-full">
+      <div className="max-w-md mx-auto p-10 m-10 bg-slate-600">
         <h2>Login</h2>
         <form onSubmit={handleLogin}>
           <label>

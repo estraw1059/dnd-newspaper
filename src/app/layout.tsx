@@ -19,7 +19,7 @@ export default function RootLayout({
               <div className="flex justify-between items-center">
                   <a href="#" className="text-white text-2xl font-semibold">Waterdeep Times</a>
                   <ul className="flex space-x-4">
-                      <li><a href="#" className="text-white hover:text-gray-300">Login</a></li>
+                      <li><a href="/login" className="text-white hover:text-gray-300">Login</a></li>
                   </ul>
               </div>
           </div>
