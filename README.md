@@ -1,4 +1,5 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Waterdeep Times DND
+This is a newspaper generating software for DND. The goal is that a DM can easily create a basic newspaper and when their players purchase the newspaper they simply give them the password to allow them to access the newspaper. 
 
 ## Getting Started
 
