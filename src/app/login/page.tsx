@@ -1,7 +1,7 @@
 "use client"
 import React, {ChangeEvent, FormEvent, useState} from "react";
 import {auth} from "../../firebase";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "../../../node_modules/next/navigation";
 
 const AdminLogin = () => {
