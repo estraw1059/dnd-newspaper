@@ -1,16 +1,31 @@
+"use client"
+import { useEffect, useState } from 'react'
+import { auth } from '../firebase';
+import { onAuthStateChanged } from "firebase/auth";
 import './globals.css'
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Waterdeep Times',
-  description: 'Extra Extra! Get the waterdeep times here',
-}
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const [loggedIn, setLoggedIn] = useState<Boolean>(false);
+  onAuthStateChanged(auth, (user: any) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/auth.user
+      const uid = user.uid;
+      console.log('User is signed in');
+      setLoggedIn(true);
+      // ...
+    } else {
+      // User is signed out
+      console.log('User is signed out');
+      setLoggedIn(false);
+    }
+  });
+
+
   return (
     <html className="h-full" lang="en">
       <body className="h-full">
@@ -18,14 +33,22 @@ export default function RootLayout({
           <div className="container mx-auto">
               <div className="flex justify-between items-center">
                   <a href="#" className="text-white text-2xl font-semibold">Waterdeep Times</a>
+                  {!loggedIn && (
                   <ul className="flex space-x-4">
                       <li><a href="/login" className="text-white hover:text-gray-300">Login</a></li>
                   </ul>
+                  )}
+
+                  {loggedIn && (
+                  <ul className="flex space-x-4">
+                      <li><a href="/logout" className="text-white hover:text-gray-300">Log out</a></li>
+                  </ul>
+                  )}
               </div>
           </div>
         </nav>
         <div className="h-[calc(100vh-74px)]">
-          {children}
+            {children}
         </div>
       </body>
     </html>
