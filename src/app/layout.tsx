@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import { auth } from '../firebase';
 import { onAuthStateChanged } from "firebase/auth";
+import {  signOut } from "firebase/auth";
 import './globals.css'
 
 export default function RootLayout({
@@ -15,16 +16,17 @@ export default function RootLayout({
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/auth.user
       const uid = user.uid;
-      console.log('User is signed in');
       setLoggedIn(true);
       // ...
     } else {
       // User is signed out
-      console.log('User is signed out');
       setLoggedIn(false);
     }
   });
 
+  const handleLogout = () => {
+      signOut(auth);
+  }
 
   return (
     <html className="h-full" lang="en">
@@ -41,7 +43,7 @@ export default function RootLayout({
 
                   {loggedIn && (
                   <ul className="flex space-x-4">
-                      <li><a href="/logout" className="text-white hover:text-gray-300">Log out</a></li>
+                      <li><a href="/" onClick={() => handleLogout()} className="text-white hover:text-gray-300">Log out</a></li>
                   </ul>
                   )}
               </div>
