@@ -7,10 +7,10 @@ import { ReactElement, useState } from "react";
 const Page = () => {
   const [password, setPassword] = useState<string>();
   return (
-      <main className="h-full">
+      <div className="h-full">
         <PasswordLockUp password={password} setPassword={setPassword}/>
         <NewsPaperFullPageOnline password={password} setPassword={setPassword}/>
-      </main>
+      </div>
   );
 }
 

@@ -34,18 +34,21 @@ export default function RootLayout({
         <nav className="bg-blue-500 p-4  h-[74px]">
           <div className="container mx-auto">
               <div className="flex justify-between items-center">
-                  <a href="#" className="text-white text-2xl font-semibold">Waterdeep Times</a>
-                  {!loggedIn && (
-                  <ul className="flex space-x-4">
-                      <li><a href="/login" className="text-white hover:text-gray-300">Login</a></li>
-                  </ul>
-                  )}
+                  <a href="/" className="text-white text-2xl font-semibold">Waterdeep Times</a>
+                  <div className="flex">
+                    <div className='mx-5'>
+                    {loggedIn && <a href="/createNewspaper" className="text-white hover:text-gray-300">Create New Paper</a>}
+                    </div>
+                    <div className='mx-5'>
+                      {!loggedIn && (
+                        <a href="/login" className="text-white hover:text-gray-300">Login</a>
+                      )}
 
-                  {loggedIn && (
-                  <ul className="flex space-x-4">
-                      <li><a href="/" onClick={() => handleLogout()} className="text-white hover:text-gray-300">Log out</a></li>
-                  </ul>
-                  )}
+                      {loggedIn && (
+                        <a href="/" onClick={() => handleLogout()} className="text-white hover:text-gray-300">Log out</a>
+                      )}
+                    </div>
+                  </div>
               </div>
           </div>
         </nav>
