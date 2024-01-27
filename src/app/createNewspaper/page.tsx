@@ -4,12 +4,35 @@ import React, { useEffect, useState } from 'react';
 import ArticleForm, { Article } from '@/components/createArticleForm/ArticleForm';
 import ArticleBaseInfo from '@/components/createArticleForm/ArticleBaseInfo';
 import {addDoc, collection } from "firebase/firestore";
-import { db } from '../../firebase';
+import { onAuthStateChanged } from "firebase/auth";
+import { auth, db } from '../../firebase';
+import { useRouter } from 'next/navigation'
+import { redirect } from '../../../node_modules/next/navigation';
+
 const page = () => {
     const [baseInfoSet, setBaseInfoSet] = useState(true);
     const [articleBaseInfo, setArticleBaseInfo] = useState({articlePassword: ''});
     const [articleNumber, setArticleNumber] = useState(0);
     const [articleList, setArticleList] = useState<Article[]>([]);
+    const router = useRouter();
+
+
+    /**
+     * I need to find a way to store login state in cache? 
+     * Tried on Auth change but that didn't work right
+     * 
+     */
+    // useEffect(() => {
+    //     console.log('Logged in ', auth.currentUser);
+    //     if(false) {
+    //         router.push('/login');
+    //     }
+    // }, [auth])
+
+    auth.onAuthStateChanged(user => {
+        user ? null : router.push('/login');
+     });
+
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
         if (articleNumber !== 4) {
