@@ -24,7 +24,6 @@ const page = () => {
             return;
         }
         // We will need create the new newspaper
-        console.log(articleList);
         articleList.forEach(article => {
             const fullArticle = {
                 articleNumber: article.articleNumber,
@@ -33,7 +32,13 @@ const page = () => {
                 articlePassword: articleBaseInfo.articlePassword
             };
             addDoc(collection(db, "articles"), fullArticle);
-        })
+        });
+        router.push(`/?password=${articleBaseInfo.articlePassword}`)
+        // router.push({
+        //     pathName: '',
+        //     query: { password: articleBaseInfo.articlePassword}
+        // });
+        
     }, [articleBaseInfo.articlePassword, articleList, articleNumber])
 
     if(baseInfoSet) {

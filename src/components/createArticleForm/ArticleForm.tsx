@@ -34,19 +34,14 @@ const ArticleForm = (props: articleFormProps) => {
   
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      // Perform actions with collected data (e.g., submit to a server, etc.)
-      console.log('Article Title:', title);
-      console.log('Article Content:', content);
       setArticleList(currentArticleList => [...currentArticleList, {articleText: content, articleTitle: title, articleNumber: (articleNumber + 1)}]);
-      
+      e.target.reset();
       // You can add further logic here to handle form submission
-      
-
       resetAndInc();
     };
     return (
       <div className="max-w-md mx-auto p-10 m-10 bg-slate-600">
-        <form onSubmit={handleSubmit}>
+        <form id='article-info' onSubmit={handleSubmit}>
           <div>Enter Info for Article {articleNumber + 1}</div>
           <div>
             <label htmlFor="articleTitle">Article Title:</label>
