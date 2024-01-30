@@ -13,12 +13,12 @@ type articleDoc = {
 }
 
 type PaperProps = {
-    setPassword: Dispatch<SetStateAction<string | undefined>>;
+    setPassword: Dispatch<SetStateAction<string>>;
     password: string | undefined;
 }
 
 const NewsPaperFullPageOnline = (props: PaperProps) => {
-    const {password, setPassword} = props;
+    const { password } = props;
     const [articles, setArticles] = useState<articleDoc[]>([]);
 
 
@@ -29,6 +29,7 @@ const NewsPaperFullPageOnline = (props: PaperProps) => {
         }
         // Fetch data and set the state within the useEffect.
         const fetchData = async () => {
+            console.log('Fetch Data');
             const q = query(collection(db, "articles"), where('articlePassword', '==', password), orderBy("articleNumber"));
             const querySnapshot = await getDocs(q);
     

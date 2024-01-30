@@ -1,23 +1,25 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 
 type PasswordLockupProps = {
-    setPassword: Dispatch<SetStateAction<string | undefined>>;
+    setPassword: Dispatch<SetStateAction<string>>;
     password: string | undefined;
+    show: boolean;
+    setShow: Dispatch<SetStateAction<boolean>>;
 }
 
 const PasswordLockUp = (props: PasswordLockupProps) => {
-    const {password, setPassword} = props;
-    const [show, setShow] = useState(true);
+    const {password, setPassword, show, setShow} = props;
 
     const handlePasswordChange = (e: any) => {
       };
     
     const handleSubmit = (e: any) => {
-    e.preventDefault();
-    setPassword(e.target[0].value);
-    setShow(false);
+        e.preventDefault();
+        setPassword(e.target[0].value);
+        setShow(false);
     };
 
+    console.log(`Show ${show}`);
     if (!show) {
         return null;
     }
