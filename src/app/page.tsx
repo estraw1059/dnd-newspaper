@@ -12,15 +12,13 @@ const Page = () => {
 
   useEffect(() => {
     if (searchParams.get('password')) {
-      console.log(searchParams.get('password'));
       setPassword(searchParams.get('password'));
-      console.log('Setting show to false');
       setShow(false);
     }
-  }, [show, password])
+  }, [show, password]);
   return (
       <div className="h-full">
-        <PasswordLockUp password={password} setPassword={setPassword} show setShow={setShow}/>
+        <PasswordLockUp password={password} setPassword={setPassword} show={show} setShow={setShow}/>
         <NewsPaperFullPageOnline password={password} setPassword={setPassword}/>
       </div>
   );

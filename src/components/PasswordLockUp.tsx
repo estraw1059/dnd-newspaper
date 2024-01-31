@@ -18,8 +18,7 @@ const PasswordLockUp = (props: PasswordLockupProps) => {
         setPassword(e.target[0].value);
         setShow(false);
     };
-
-    console.log(`Show ${show}`);
+    
     if (!show) {
         return null;
     }
