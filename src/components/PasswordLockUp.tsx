@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 
 type PasswordLockupProps = {
-    setPassword: Dispatch<SetStateAction<string>>;
+    setPassword: Dispatch<SetStateAction<string | undefined>>;
     password: string | undefined;
     show: boolean;
     setShow: Dispatch<SetStateAction<boolean>>;
@@ -18,7 +18,7 @@ const PasswordLockUp = (props: PasswordLockupProps) => {
         setPassword(e.target[0].value);
         setShow(false);
     };
-    
+
     if (!show) {
         return null;
     }

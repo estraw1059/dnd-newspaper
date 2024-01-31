@@ -6,16 +6,17 @@ import { useSearchParams } from 'next/navigation'
 
 
 const Page = () => {
-  const [password, setPassword] = useState<string>('');
+  const [password, setPassword] = useState<string>();
   const [show, setShow] = useState<boolean>(true);
   const searchParams = useSearchParams();
 
   useEffect(() => {
     if (searchParams.get('password')) {
-      setPassword(searchParams.get('password'));
+      const providedPassword = searchParams.get('password') as string;
+      setPassword(providedPassword);
       setShow(false);
     }
-  }, [show, password]);
+  }, [show, password, searchParams]);
   return (
       <div className="h-full">
         <PasswordLockUp password={password} setPassword={setPassword} show={show} setShow={setShow}/>

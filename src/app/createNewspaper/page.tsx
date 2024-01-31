@@ -39,7 +39,7 @@ const page = () => {
         //     query: { password: articleBaseInfo.articlePassword}
         // });
         
-    }, [articleBaseInfo.articlePassword, articleList, articleNumber])
+    }, [articleBaseInfo.articlePassword, articleList, articleNumber, router])
 
     if(baseInfoSet) {
         return (

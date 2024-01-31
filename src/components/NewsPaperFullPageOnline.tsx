@@ -13,7 +13,7 @@ type articleDoc = {
 }
 
 type PaperProps = {
-    setPassword: Dispatch<SetStateAction<string>>;
+    setPassword: Dispatch<SetStateAction<string | undefined>>;
     password: string | undefined;
 }
 

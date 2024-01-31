@@ -35,7 +35,6 @@ const ArticleForm = (props: articleFormProps) => {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       setArticleList(currentArticleList => [...currentArticleList, {articleText: content, articleTitle: title, articleNumber: (articleNumber + 1)}]);
-      e.target.reset();
       // You can add further logic here to handle form submission
       resetAndInc();
     };
