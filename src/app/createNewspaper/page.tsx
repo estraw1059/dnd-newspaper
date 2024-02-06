@@ -34,10 +34,6 @@ const page = () => {
             addDoc(collection(db, "articles"), fullArticle);
         });
         router.push(`/?password=${articleBaseInfo.articlePassword}`)
-        // router.push({
-        //     pathName: '',
-        //     query: { password: articleBaseInfo.articlePassword}
-        // });
         
     }, [articleBaseInfo.articlePassword, articleList, articleNumber, router])
 

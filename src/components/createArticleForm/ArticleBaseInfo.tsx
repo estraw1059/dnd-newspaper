@@ -23,6 +23,7 @@ const ArticleBaseInfo = (props: articleBaseProps) => {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       // Move to next page
+      setArticleBaseInfo(baseInfo => ({ articlePassword: baseInfo.articlePassword.toLocaleLowerCase() }))
       setBaseInfo(false);
     };
     return (

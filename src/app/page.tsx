@@ -13,7 +13,7 @@ const Page = () => {
   useEffect(() => {
     if (searchParams.get('password')) {
       const providedPassword = searchParams.get('password') as string;
-      setPassword(providedPassword);
+      setPassword(providedPassword.toLocaleLowerCase());
       setShow(false);
     }
   }, [show, password, searchParams]);
