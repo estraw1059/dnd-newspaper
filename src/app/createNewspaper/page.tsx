@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 import ArticleForm, { Article } from '@/components/createArticleForm/ArticleForm';
 import ArticleBaseInfo from '@/components/createArticleForm/ArticleBaseInfo';
 import {addDoc, collection } from "firebase/firestore";
-import { auth, db } from '../../firebase';
-import { useRouter } from 'next/navigation'
+import { auth, db, app } from '../../firebase';
+import { useRouter } from 'next/navigation';
 
 const page = () => {
     const [baseInfoSet, setBaseInfoSet] = useState(true);
@@ -34,6 +34,12 @@ const page = () => {
             };
             addDoc(collection(db, "articles"), fullArticle);
         });
+        const userPage = {
+            pagePassword: articleBaseInfo.articlePassword,
+            uid: articleBaseInfo.user,
+            createdDate: (new Date()).toString()
+        }
+        addDoc(collection(db, 'userPage'), userPage);
         router.push(`/?password=${articleBaseInfo.articlePassword}`)
         
     }, [articleBaseInfo.articlePassword, articleList, articleNumber, router])
