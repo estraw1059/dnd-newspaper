@@ -1,8 +1,10 @@
 "use client"
 import React, { ChangeEvent, FormEvent, useState } from 'react';
+import { auth } from '../../firebase';
 
 export type ArticleBaseInfo = {
   articlePassword: string;
+  user?: string;
 }
 
 type articleBaseProps = {
@@ -13,17 +15,29 @@ type articleBaseProps = {
 
 const ArticleBaseInfo = (props: articleBaseProps) => {
     const { articleBaseInfo, setArticleBaseInfo, setBaseInfo } = props;
+    const [user, setUser] = useState(null);
+
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    });
   
     const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
       setArticleBaseInfo({
-        articlePassword: e.target.value
+        articlePassword: e.target.value,
+        user: ''
       });
     }
   
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       // Move to next page
-      setArticleBaseInfo(baseInfo => ({ articlePassword: baseInfo.articlePassword.toLocaleLowerCase() }))
+      setArticleBaseInfo(baseInfo => ({ 
+        articlePassword: baseInfo.articlePassword.toLocaleLowerCase(), 
+        user: user?.uid || null }))
       setBaseInfo(false);
     };
     return (

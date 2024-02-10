@@ -29,7 +29,8 @@ const page = () => {
                 articleNumber: article.articleNumber,
                 articleTitle: article.articleTitle,
                 articleText: article.articleText,
-                articlePassword: articleBaseInfo.articlePassword
+                articlePassword: articleBaseInfo.articlePassword,
+                uid: articleBaseInfo.user
             };
             addDoc(collection(db, "articles"), fullArticle);
         });
