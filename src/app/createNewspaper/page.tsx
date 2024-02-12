@@ -2,15 +2,15 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import ArticleForm, { Article } from '@/components/createArticleForm/ArticleForm';
-import ArticleBaseInfo from '@/components/createArticleForm/ArticleBaseInfo';
 import {addDoc, collection } from "firebase/firestore";
 import { auth, db } from '../../firebase';
 import { useRouter } from 'next/navigation';
-import Spinner from '@/components/spinner';
+import Spinner from '@/components/Spinner';
+import ArticleBaseInfo, { ArticleBaseInfoObject } from '@/components/createArticleForm/ArticleBaseInfo';
 
 const page = () => {
     const [baseInfoSet, setBaseInfoSet] = useState(true);
-    const [articleBaseInfo, setArticleBaseInfo] = useState({articlePassword: ''});
+    const [articleBaseInfo, setArticleBaseInfo] = useState<ArticleBaseInfoObject>({articlePassword: '', user: ''});
     const [articleList, setArticleList] = useState<Article[]>([]);
     const router = useRouter();
 

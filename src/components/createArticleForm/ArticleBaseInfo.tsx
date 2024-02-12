@@ -2,26 +2,30 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { auth } from '../../firebase';
 
-export type ArticleBaseInfo = {
+export type ArticleBaseInfoObject = {
   articlePassword: string;
   user?: string;
 }
 
+export type User = {
+  uid: string;
+}
+
 type articleBaseProps = {
-  articleBaseInfo: ArticleBaseInfo;
-  setArticleBaseInfo: React.Dispatch<React.SetStateAction<ArticleBaseInfo>>;
+  articleBaseInfo: ArticleBaseInfoObject;
+  setArticleBaseInfo: React.Dispatch<React.SetStateAction<ArticleBaseInfoObject>>;
   setBaseInfo: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ArticleBaseInfo = (props: articleBaseProps) => {
     const { articleBaseInfo, setArticleBaseInfo, setBaseInfo } = props;
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState<User | undefined>(undefined);
 
-    const unsubscribe = auth.onAuthStateChanged(user => {
+    const unsubscribe = auth.onAuthStateChanged((user: any) => {
       if (user) {
         setUser(user);
       } else {
-        setUser(null);
+        setUser(undefined);
       }
     });
   
@@ -37,7 +41,7 @@ const ArticleBaseInfo = (props: articleBaseProps) => {
       // Move to next page
       setArticleBaseInfo(baseInfo => ({ 
         articlePassword: baseInfo.articlePassword.toLocaleLowerCase(), 
-        user: user?.uid || null }))
+        user: user?.uid || undefined }))
       setBaseInfo(false);
     };
     return (
