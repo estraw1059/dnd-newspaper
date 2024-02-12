@@ -4,13 +4,13 @@ import React, { useEffect, useState } from 'react';
 import ArticleForm, { Article } from '@/components/createArticleForm/ArticleForm';
 import ArticleBaseInfo from '@/components/createArticleForm/ArticleBaseInfo';
 import {addDoc, collection } from "firebase/firestore";
-import { auth, db, app } from '../../firebase';
+import { auth, db } from '../../firebase';
 import { useRouter } from 'next/navigation';
+import Spinner from '@/components/spinner';
 
 const page = () => {
     const [baseInfoSet, setBaseInfoSet] = useState(true);
     const [articleBaseInfo, setArticleBaseInfo] = useState({articlePassword: ''});
-    const [articleNumber, setArticleNumber] = useState(0);
     const [articleList, setArticleList] = useState<Article[]>([]);
     const router = useRouter();
 
@@ -20,7 +20,7 @@ const page = () => {
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-        if (articleNumber !== 4) {
+        if (articleList.length !== 4) {
             return;
         }
         // We will need create the new newspaper
@@ -42,7 +42,7 @@ const page = () => {
         addDoc(collection(db, 'userPage'), userPage);
         router.push(`/?password=${articleBaseInfo.articlePassword}`)
         
-    }, [articleBaseInfo.articlePassword, articleList, articleNumber, router])
+    }, [articleBaseInfo.articlePassword, articleList, router])
 
     if(baseInfoSet) {
         return (
@@ -50,9 +50,15 @@ const page = () => {
         )
     }
 
+    if(articleList.length == 4) {
+        return (
+            <Spinner/>
+        );
+    }
+
     return (
         <div>
-            <ArticleForm articleNumber={articleNumber} setArticleNumber={setArticleNumber} setArticleList={setArticleList}/>
+            <ArticleForm articleList={articleList} setArticleList={setArticleList}/>
         </div>
     );
 };

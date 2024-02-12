@@ -8,13 +8,12 @@ export type Article = {
 }
 
 type articleFormProps = {
-  articleNumber: number;
-  setArticleNumber: React.Dispatch<React.SetStateAction<number>>;
+  articleList: Article[];
   setArticleList: React.Dispatch<React.SetStateAction<Article[]>>;
 }
 
 const ArticleForm = (props: articleFormProps) => {
-    const { articleNumber, setArticleNumber, setArticleList } = props;
+    const { articleList, setArticleList } = props;
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
   
@@ -27,21 +26,23 @@ const ArticleForm = (props: articleFormProps) => {
     };
 
     const resetAndInc = () => {
-      setArticleNumber(tempArticleNumber => tempArticleNumber + 1);
       setTitle('');
       setContent('');
     }
   
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+      const currentArticleLength = articleList.length;
       e.preventDefault();
-      setArticleList(currentArticleList => [...currentArticleList, {articleText: content, articleTitle: title, articleNumber: (articleNumber + 1)}]);
+      setArticleList(currentArticleList => [...currentArticleList, {articleText: content, articleTitle: title, articleNumber: (currentArticleLength + 1)}]);
       // You can add further logic here to handle form submission
-      resetAndInc();
+      if(currentArticleLength + 1 != 4) {
+        resetAndInc();
+      }
     };
     return (
       <div className="max-w-md mx-auto p-10 m-10 bg-slate-600">
         <form id='article-info' onSubmit={handleSubmit}>
-          <div>Enter Info for Article {articleNumber + 1}</div>
+          <div>Enter Info for Article {articleList.length + 1}</div>
           <div>
             <label htmlFor="articleTitle">Article Title:</label>
             <input
