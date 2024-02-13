@@ -42,7 +42,7 @@ const page = () => {
         addDoc(collection(db, 'userPage'), userPage);
         router.push(`/?password=${articleBaseInfo.articlePassword}`)
         
-    }, [articleBaseInfo.articlePassword, articleList, router])
+    }, [articleBaseInfo.articlePassword, articleList, router, articleBaseInfo.user])
 
     if(baseInfoSet) {
         return (

@@ -1,6 +1,5 @@
 import { db }  from "../../firebase";
 import { query, collection, getDocs, DocumentData } from "firebase/firestore";
-import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 
 type UserArticle = {
   createdDate: string;
@@ -9,7 +8,7 @@ type UserArticle = {
 }
 
 
-export default function Page() {
+export default async function Page() {
 
   async function getUserNewspapers(): Promise<UserArticle[]> {
     'use server'
@@ -24,10 +23,14 @@ export default function Page() {
     return tempDocs;
   }
 
-  const userArticles = getUserNewspapers();
+  const userArticles = await getUserNewspapers();
 
   return (
-    <div>The user will see their newspapers on this page</div>
+    <div>
+      {userArticles.map((article, key) => {
+        return (<div key={key}>{article.pagePassword}</div>)
+      })}
+    </div>
 
   )
 }
