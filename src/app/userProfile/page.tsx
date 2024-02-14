@@ -1,5 +1,5 @@
 import { db }  from "../../firebase";
-import { query, collection, getDocs, DocumentData } from "firebase/firestore";
+import { query, collection, getDocs, DocumentData, where } from "firebase/firestore";
 
 type UserArticle = {
   createdDate: string;
@@ -12,7 +12,7 @@ export default async function Page() {
 
   async function getUserNewspapers(): Promise<UserArticle[]> {
     'use server'
-    const q = query(collection(db, "userPage"));
+    const q = query(collection(db, "userPage"), where('uid', '==', 'OrmFhLO4A8MbvKeMMJbISjnbkGG2'));
     const querySnapshot = await getDocs(q);
 
     const tempDocs: UserArticle[] = [];
