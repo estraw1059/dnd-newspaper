@@ -3,6 +3,7 @@ import React, {ChangeEvent, FormEvent, useState} from "react";
 import {auth} from "../../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "../../../node_modules/next/navigation";
+import { setCookie } from "cookies-next";
 
 const AdminLogin = () => {
     const [email, setEmail] = useState('');
@@ -24,10 +25,17 @@ const AdminLogin = () => {
       // Call Firebase's signInWithEmailAndPassword method to authenticate the user
       signInWithEmailAndPassword(auth, email, password)
         .then(() => {
+          auth?.currentUser?.getIdToken(/* forceRefresh */ true).then(function(idToken: string) {
+            // Send token to your backend via HTTPS
+            // ...
+            setCookie('authToken', idToken);
+          }).catch(function(error: any) {
+            // Handle error
+          });
           // Login successful, do something with the user data
           router.push(`/createNewspaper`);
         })
-        .catch((error) => {
+        .catch((error: { message: any; }) => {
           // Handle login errors
           setError(true);
           console.error('Login error:', error.message);

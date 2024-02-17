@@ -12,13 +12,14 @@ export default async function Page() {
 
   async function getUserNewspapers(): Promise<UserArticle[]> {
     'use server'
-    const q = query(collection(db, "userPage"), where('uid', '==', 'OrmFhLO4A8MbvKeMMJbISjnbkGG2'));
-    const querySnapshot = await getDocs(q);
+    // Redo With Cookie
+    // const q = query(collection(db, "userPage"), where('uid', '==', 'OrmFhLO4A8MbvKeMMJbISjnbkGG2'));
+    // const querySnapshot = await getDocs(q);
 
     const tempDocs: UserArticle[] = [];
-    querySnapshot.forEach((doc: DocumentData) => {
-        tempDocs.push(doc.data());
-    });
+    // querySnapshot.forEach((doc: DocumentData) => {
+    //     tempDocs.push(doc.data());
+    // });
     console.log(tempDocs);
     return tempDocs;
   }
