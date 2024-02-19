@@ -1,5 +1,4 @@
-import { query, collection, getDocs, DocumentData, where } from "firebase/firestore";
-import { cookies } from 'next/headers';
+
 
 type UserArticle = {
   createdDate: string;
@@ -12,10 +11,14 @@ export default async function Page() {
 
   async function getUserNewspapers(): Promise<UserArticle[]> {
     'use server'
+    var admin = require("firebase-admin");
+    var serviceAccount = require("adminAPIKey.json");
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount)
+    });
+
     // Redo With Cookie
-    const cookieStore = cookies();
-    const authToken = cookieStore.get('authToken');
-    const { app } = await getAuthenticatedAppForUser();
+
     // auth.verifyToken(authToken).then((decodedToken: { uid: any; }) => {
     //   const uid = decodedToken.uid;
     //   console.log('Found User: ', uid);
@@ -23,7 +26,6 @@ export default async function Page() {
     // .catch((error) => {
     //   console.log('Error decoding token', error);
     // });
-    console.log(`Auth Token found on server is: ${authToken}`, authToken);
     // const q = query(collection(db, "userPage"), where('uid', '==', 'OrmFhLO4A8MbvKeMMJbISjnbkGG2'));
     // const querySnapshot = await getDocs(q);
 
