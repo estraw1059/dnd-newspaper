@@ -1,4 +1,5 @@
-
+import { auth } from "@/firebaseAdmin";
+import { getCookie } from "cookies-next";
 
 type UserArticle = {
   createdDate: string;
@@ -11,11 +12,19 @@ export default async function Page() {
 
   async function getUserNewspapers(): Promise<UserArticle[]> {
     'use server'
-    var admin = require("firebase-admin");
-    var serviceAccount = require("adminAPIKey.json");
-    admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount)
-    });
+    const authToken = getCookie("authToken");
+    auth
+      .verifyIdToken(authToken)
+      .then((decodedToken: { uid: any; }) => {
+        const uid = decodedToken.uid;
+        console.log(`On the server we found the UID to be ${uid}`)
+        // ...
+      })
+      .catch((_error) => {
+        // Handle error
+        console.log('There was an error');
+      });
+    
 
     // Redo With Cookie
 
@@ -33,7 +42,6 @@ export default async function Page() {
     // querySnapshot.forEach((doc: DocumentData) => {
     //     tempDocs.push(doc.data());
     // });
-    console.log(tempDocs);
     return tempDocs;
   }
 
