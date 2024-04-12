@@ -10,20 +10,20 @@ type UserArticle = {
 
 export default async function Page() {
 
-  async function getUserNewspapers(): Promise<UserArticle[]> {
-    'use server'
-    const authToken = getCookie("authToken");
-    auth
-      .verifyIdToken(authToken)
-      .then((decodedToken: { uid: any; }) => {
-        const uid = decodedToken.uid;
-        console.log(`On the server we found the UID to be ${uid}`)
-        // ...
-      })
-      .catch((_error) => {
-        // Handle error
-        console.log('There was an error');
-      });
+  // async function getUserNewspapers(): Promise<UserArticle[]> {
+  //   'use server'
+  //   const authToken = getCookie("authToken");
+  //   auth
+  //     .verifyIdToken(authToken)
+  //     .then((decodedToken: { uid: any; }) => {
+  //       const uid = decodedToken.uid;
+  //       console.log(`On the server we found the UID to be ${uid}`)
+  //       // ...
+  //     })
+  //     .catch((_error) => {
+  //       // Handle error
+  //       console.log('There was an error');
+  //     });
     
 
     // Redo With Cookie
@@ -38,12 +38,12 @@ export default async function Page() {
     // const q = query(collection(db, "userPage"), where('uid', '==', 'OrmFhLO4A8MbvKeMMJbISjnbkGG2'));
     // const querySnapshot = await getDocs(q);
 
-    const tempDocs: UserArticle[] = [];
-    // querySnapshot.forEach((doc: DocumentData) => {
-    //     tempDocs.push(doc.data());
-    // });
-    return tempDocs;
-  }
+  //   const tempDocs: UserArticle[] = [];
+  //   // querySnapshot.forEach((doc: DocumentData) => {
+  //   //     tempDocs.push(doc.data());
+  //   // });
+  //   return tempDocs;
+  // }
 
   const userArticles = await getUserNewspapers();
 
