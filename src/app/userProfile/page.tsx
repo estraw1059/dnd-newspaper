@@ -45,6 +45,25 @@ export default async function Page() {
   //   return tempDocs;
   // }
 
+  const getUserNewspapers = () => {
+    const authToken = getCookie("authToken");
+    auth.verifyToken(authToken).then((decodedToken: { uid: any; }) => {
+      const uid = decodedToken.uid;
+      console.log('Found User: ', uid);
+    })
+    .catch((error) => {
+      console.log('Error decoding token', error);
+    });
+    const q = query(collection(db, "userPage"), where('uid', '==', 'OrmFhLO4A8MbvKeMMJbISjnbkGG2'));
+    const querySnapshot = await getDocs(q);
+
+    const tempDocs: UserArticle[] = [];
+    querySnapshot.forEach((doc: DocumentData) => {
+        tempDocs.push(doc.data());
+    });
+    return tempDocs;
+  }
+
   const userArticles = await getUserNewspapers();
 
   return (
