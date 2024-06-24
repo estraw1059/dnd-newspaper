@@ -20,7 +20,7 @@ export default function Page() {
       const userUID = getCookie("userUID");
       const q = query(collection(db, "userPage"), where('uid', '==', userUID));
       const querySnapshot = await getDocs(q);
-  
+      
       const tempDocs: UserArticle[] = [];
       querySnapshot.forEach((doc: DocumentData) => {
           tempDocs.push(doc.data());
