@@ -1,5 +1,8 @@
-import { auth } from "@/firebaseAdmin";
+"use client"
 import { getCookie } from "cookies-next";
+import { db, app }  from "../../firebase";
+import { query, where, collection, getDocs, DocumentData } from "firebase/firestore";
+import { useEffect, useState } from "react";
 
 type UserArticle = {
   createdDate: string;
@@ -8,63 +11,26 @@ type UserArticle = {
 }
 
 
-export default async function Page() {
+export default function Page() {
 
-  // async function getUserNewspapers(): Promise<UserArticle[]> {
-  //   'use server'
-  //   const authToken = getCookie("authToken");
-  //   auth
-  //     .verifyIdToken(authToken)
-  //     .then((decodedToken: { uid: any; }) => {
-  //       const uid = decodedToken.uid;
-  //       console.log(`On the server we found the UID to be ${uid}`)
-  //       // ...
-  //     })
-  //     .catch((_error) => {
-  //       // Handle error
-  //       console.log('There was an error');
-  //     });
-    
+  const [userArticles, setUserArticles] = useState<UserArticle[]>([]);
 
-    // Redo With Cookie
+  useEffect(() => {
+    const getUserNewspapers = async () => {
+      const userUID = getCookie("userUID");
+      const q = query(collection(db, "userPage"), where('uid', '==', userUID));
+      const querySnapshot = await getDocs(q);
+  
+      const tempDocs: UserArticle[] = [];
+      querySnapshot.forEach((doc: DocumentData) => {
+          tempDocs.push(doc.data());
+      });
+      setUserArticles(tempDocs);
+    }
 
-    // auth.verifyToken(authToken).then((decodedToken: { uid: any; }) => {
-    //   const uid = decodedToken.uid;
-    //   console.log('Found User: ', uid);
-    // })
-    // .catch((error) => {
-    //   console.log('Error decoding token', error);
-    // });
-    // const q = query(collection(db, "userPage"), where('uid', '==', 'OrmFhLO4A8MbvKeMMJbISjnbkGG2'));
-    // const querySnapshot = await getDocs(q);
 
-  //   const tempDocs: UserArticle[] = [];
-  //   // querySnapshot.forEach((doc: DocumentData) => {
-  //   //     tempDocs.push(doc.data());
-  //   // });
-  //   return tempDocs;
-  // }
-
-  const getUserNewspapers = () => {
-    const authToken = getCookie("authToken");
-    auth.verifyToken(authToken).then((decodedToken: { uid: any; }) => {
-      const uid = decodedToken.uid;
-      console.log('Found User: ', uid);
-    })
-    .catch((error) => {
-      console.log('Error decoding token', error);
-    });
-    const q = query(collection(db, "userPage"), where('uid', '==', 'OrmFhLO4A8MbvKeMMJbISjnbkGG2'));
-    const querySnapshot = await getDocs(q);
-
-    const tempDocs: UserArticle[] = [];
-    querySnapshot.forEach((doc: DocumentData) => {
-        tempDocs.push(doc.data());
-    });
-    return tempDocs;
-  }
-
-  const userArticles = await getUserNewspapers();
+    getUserNewspapers()
+  }, []);
 
   return (
     <div>

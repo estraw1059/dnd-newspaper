@@ -29,6 +29,7 @@ const AdminLogin = () => {
             // Send token to your backend via HTTPS
             // ...
             setCookie('authToken', idToken);
+            setCookie('userUID', auth?.currentUser?.uid);
           }).catch(function(error: any) {
             // Handle error
           });
