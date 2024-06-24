@@ -45,7 +45,10 @@ export default function RootLayout({
                       )}
 
                       {loggedIn && (
-                        <a href="/" onClick={() => handleLogout()} className="text-white hover:text-gray-300">Log out</a>
+                        <>
+                          <a href="/" onClick={() => handleLogout()} className="text-white hover:text-gray-300 m-10">Log out</a>
+                          <a href="/userProfile" className="text-white hover:text-gray-300 m-10">Profile</a>
+                        </>
                       )}
                     </div>
                   </div>
