@@ -4,6 +4,8 @@ import { db }  from "../../firebase";
 import { query, where, collection, getDocs, DocumentData } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
+import UserArticleCard from "@/components/UserArticleCard";
+import { Container } from "react-bootstrap";
 
 type UserArticle = {
   createdDate: string;
@@ -38,11 +40,11 @@ export default function Page() {
   }, []);
 
   return (
-    <div>
+    <Container className="flex flex-col items-center bg-white">
       {userArticles.map((article, key) => {
-        return (<div key={key}>{article.pagePassword}</div>)
+        return (<UserArticleCard key={key} newsPaperTitle={article.uid} password={article.pagePassword} createdDate={article.createdDate} />)
       })}
-    </div>
+    </Container>
 
   )
 }
