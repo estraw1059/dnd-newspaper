@@ -10,6 +10,7 @@ import { Container } from "react-bootstrap";
 type UserArticle = {
   createdDate: string;
   pagePassword: string;
+  articleTitle: string;
   uid: string;
 }
 
@@ -40,10 +41,12 @@ export default function Page() {
   }, []);
 
   return (
-    <Container className="flex flex-col items-center bg-white">
-      {userArticles.map((article, key) => {
-        return (<UserArticleCard key={key} newsPaperTitle={article.uid} password={article.pagePassword} createdDate={article.createdDate} />)
-      })}
+    <Container className="flex flex-col items-center bg-white h-screen p-10">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+        {userArticles.map((article, key) => {
+          return (<UserArticleCard key={key} newsPaperTitle={article.articleTitle} password={article.pagePassword} createdDate={article.createdDate} />)
+        })}
+      </div>
     </Container>
 
   )

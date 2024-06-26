@@ -10,7 +10,13 @@ import ArticleBaseInfo, { ArticleBaseInfoObject } from '@/components/createArtic
 
 const page = () => {
     const [baseInfoSet, setBaseInfoSet] = useState(true);
-    const [articleBaseInfo, setArticleBaseInfo] = useState<ArticleBaseInfoObject>({articlePassword: '', user: ''});
+    const [articleBaseInfo, setArticleBaseInfo] = useState<ArticleBaseInfoObject>(
+        {
+            articlePassword: '', 
+            newspaperTitle: 'Waterdeep Times', 
+            user: ''
+        }
+    );
     const [articleList, setArticleList] = useState<Article[]>([]);
     const router = useRouter();
 
@@ -36,6 +42,7 @@ const page = () => {
         });
         const userPage = {
             pagePassword: articleBaseInfo.articlePassword,
+            articleTitle: articleBaseInfo.newspaperTitle,
             uid: articleBaseInfo.user,
             createdDate: (new Date()).toString()
         }

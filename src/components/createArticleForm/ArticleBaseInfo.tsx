@@ -4,6 +4,7 @@ import { auth } from '../../firebase';
 
 export type ArticleBaseInfoObject = {
   articlePassword: string;
+  newspaperTitle: string;
   user?: string;
 }
 
@@ -30,17 +31,19 @@ const ArticleBaseInfo = (props: articleBaseProps) => {
     });
   
     const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-      setArticleBaseInfo({
+      setArticleBaseInfo(currentArticle => ({
         articlePassword: e.target.value,
-        user: ''
-      });
+        newspaperTitle: currentArticle.newspaperTitle,
+        user: currentArticle.user
+      }));
     }
   
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       // Move to next page
       setArticleBaseInfo(baseInfo => ({ 
-        articlePassword: baseInfo.articlePassword.toLocaleLowerCase(), 
+        articlePassword: baseInfo.articlePassword.toLocaleLowerCase(),
+        newspaperTitle: baseInfo.newspaperTitle, 
         user: user?.uid || undefined }))
       setBaseInfo(false);
     };
@@ -56,6 +59,14 @@ const ArticleBaseInfo = (props: articleBaseProps) => {
               onChange={handlePasswordChange}
               className="border border-gray-300 rounded-md p-2 w-full mt-1 text-black"
             />
+          </div>
+          <div className="mb-5">
+            <label htmlFor="newspaperTitle">Enter Newspaper Title:</label>
+            <input 
+              type='text' 
+              id='newspaperTitle' 
+              value={articleBaseInfo.newspaperTitle} 
+              onChange={(e) => setArticleBaseInfo(currentArticle => ({ articlePassword: currentArticle.articlePassword, newspaperTitle: e.target.value, user: currentArticle.user }))} className='border border-gray-300 rounded-md p-2 w-full mt-1 text-black'/>
           </div>
           <button type="submit">Submit</button>
         </form>
