@@ -23,7 +23,7 @@ const UserArticleCard = (props: UserArticleCardProps) => {
         </Card.Header>
         <Card.Body>
           <Card.Text>
-            Password: <Link className='hover:text-blue-800 underline' href={`/?password=${password}`}>{password}</Link>
+            Password: {password}
             <br />
             Created Date: {createdDate}
           </Card.Text>
