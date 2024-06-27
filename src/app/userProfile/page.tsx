@@ -26,6 +26,7 @@ export default function Page() {
       if (!userUID) {
         // redirect to login page
         router.push("/login");
+        return;
       }
       const q = query(collection(db, "userPage"), where('uid', '==', userUID));
       const querySnapshot = await getDocs(q);

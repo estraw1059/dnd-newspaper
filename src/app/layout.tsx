@@ -4,6 +4,7 @@ import { auth } from '../firebase';
 import { onAuthStateChanged } from "firebase/auth";
 import {  signOut } from "firebase/auth";
 import './globals.css'
+import { deleteCookie } from "cookies-next";
 
 export default function RootLayout({
   children,
@@ -26,6 +27,7 @@ export default function RootLayout({
 
   const handleLogout = () => {
       signOut(auth);
+      deleteCookie("userUID");
   }
 
   return (
