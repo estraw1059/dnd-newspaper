@@ -20,7 +20,7 @@ const Page = () => {
   return (
       <div className="h-full">
         <PasswordLockUp password={password} setPassword={setPassword} show={show} setShow={setShow}/>
-        <NewsPaperFullPageOnline password={password} setPassword={setPassword}/>
+        <NewsPaperFullPageOnline password={password} editMode={false} />
       </div>
   );
 }

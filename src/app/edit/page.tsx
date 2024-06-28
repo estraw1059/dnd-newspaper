@@ -1,19 +1,21 @@
 'use client'
+import NewsPaperFullPageOnline from "@/components/NewsPaperFullPageOnline";
 import { getCookie } from "cookies-next";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from 'next/navigation';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 
 export default function Page() {
     const searchParams = useSearchParams();
+    const [password, setPassword] = useState<string>(); 
     const router = useRouter();
 
     useEffect(() => {
         const checkPageLoad = async () => {
             //Check that a password was provided
-            const password = searchParams.get('password');
-            if (!password) {
+            const localPassword = searchParams.get('password');
+            if (!localPassword) {
                 // redirect to login page
                 router.push("/");
                 return;
@@ -24,15 +26,14 @@ export default function Page() {
               // redirect to login page
               router.push("/login");
             }
-
-
+            setPassword(localPassword);
         }
 
         checkPageLoad();
       }, []);
     return (
-        <div>
-            My First Page
+        <div className="h-full">
+            <NewsPaperFullPageOnline password={password} editMode={true}/>
         </div>
     );
 }

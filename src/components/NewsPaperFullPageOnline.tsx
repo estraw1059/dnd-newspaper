@@ -6,6 +6,7 @@ import { db }  from "../firebase";
 import { query, where, orderBy, collection, getDocs, DocumentData } from "firebase/firestore";
 
 type articleDoc = {
+    articleId: string;
     articlePassword: string;
     articleText: string;
     articleNumber: number;
@@ -13,12 +14,12 @@ type articleDoc = {
 }
 
 type PaperProps = {
-    setPassword: Dispatch<SetStateAction<string | undefined>>;
     password: string | undefined;
+    editMode: boolean;
 }
 
 const NewsPaperFullPageOnline = (props: PaperProps) => {
-    const { password } = props;
+    const { password, editMode } = props;
     const [articles, setArticles] = useState<articleDoc[]>([]);
 
 
@@ -34,8 +35,10 @@ const NewsPaperFullPageOnline = (props: PaperProps) => {
     
             const tempDocs: articleDoc[] = [];
             querySnapshot.forEach((doc: DocumentData) => {
-                tempDocs.push(doc.data());
-                console.log(tempDocs)
+                tempDocs.push({
+                    articleId: doc.id,
+                    ...doc.data()
+                });
             });
             await setArticles(tempDocs);
         };
@@ -47,7 +50,7 @@ const NewsPaperFullPageOnline = (props: PaperProps) => {
     const articleComp = articles.map((article: articleDoc) => {
         return (
             <div key={article.articleNumber} className="fp-item">
-                <NewsArticle title={article.articleTitle} text={article.articleText}/>
+                <NewsArticle title={article.articleTitle} text={article.articleText} editView={editMode} articleId={article.articleId}/>
             </div>
         );
     })
