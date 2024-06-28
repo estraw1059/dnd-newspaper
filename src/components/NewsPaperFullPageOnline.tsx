@@ -60,25 +60,25 @@ const NewsPaperFullPageOnline = (props: PaperProps) => {
     }
 
     return (
-        <div className="container">
-            <div className="frontpage text-[#000000]">
-                <div className="fp-cell fp-cell--1">
+        <div className='grid grid-cols-1 lg:grid-cols-3 md:grid-rows-2 gap-4 p-10 h-full w-full text-[#000000]'>
+            <div className='lg:row-span-2 lg:col-span-1 fp-cell'>
+                <div className="article">
                     {articleComp[3]}
                 </div>
-                <div className="fp-cell fp-cell--2">
-                    <div className="fp-cell fp-cell--1">
-                        {articleComp[0]}
-                    </div>
+            </div>
+            <div className='lg:col-span-2 col-span-1'>
+                <div className="article">
+                    {articleComp[0]}
                 </div>
-                <div className="fp-cell fp-cell--3">
-                    <div className="fp-cell fp-cell--1">
-                        {articleComp[1]}
-                    </div>
+            </div>
+            <div className='col-span-1'>
+                <div className="article">
+                    {articleComp[1]}
                 </div>
-                <div className="fp-cell fp-cell--4">
-                    <div className="fp-cell fp-cell--1">
-                        {articleComp[2]}
-                    </div>
+            </div>
+            <div className='col-span-1'>
+                <div className="article">
+                    {articleComp[2]}
                 </div>
             </div>
         </div>

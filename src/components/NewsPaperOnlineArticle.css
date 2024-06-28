@@ -14,7 +14,13 @@
   .fp-cell {
     background-color: #fff;
     padding: 16px;
-    height:100%;
+  }
+
+  .article {
+    background-color: #fff;
+    padding: 16px;
+    overflow: auto;
+    height: -webkit-fill-available;
   }
   
   .fp-cell--1 {
