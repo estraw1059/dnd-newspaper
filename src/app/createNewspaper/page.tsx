@@ -47,7 +47,7 @@ const page = () => {
             createdDate: (new Date()).toString()
         }
         addDoc(collection(db, 'userPage'), userPage);
-        router.push(`/?password=${articleBaseInfo.articlePassword}`)
+        router.push(`/edit?password=${articleBaseInfo.articlePassword}`)
         
     }, [articleBaseInfo.articlePassword, articleList, router, articleBaseInfo.user])
 
