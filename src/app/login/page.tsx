@@ -34,7 +34,7 @@ const AdminLogin = () => {
             // Handle error
           });
           // Login successful, do something with the user data
-          router.push(`/createNewspaper`);
+          router.push(`/userProfile`);
         })
         .catch((error: { message: any; }) => {
           // Handle login errors
