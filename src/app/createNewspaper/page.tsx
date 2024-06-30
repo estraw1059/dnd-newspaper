@@ -2,7 +2,7 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import ArticleForm, { Article } from '@/components/createArticleForm/ArticleForm';
-import {addDoc, collection } from "firebase/firestore";
+import {addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from '../../firebase';
 import { useRouter } from 'next/navigation';
 import Spinner from '@/components/Spinner';
@@ -14,7 +14,8 @@ const page = () => {
         {
             articlePassword: '', 
             newspaperTitle: 'Waterdeep Times', 
-            user: ''
+            user: '',
+            newspaperId: ''
         }
     );
     const [articleList, setArticleList] = useState<Article[]>([]);
@@ -29,25 +30,43 @@ const page = () => {
         if (articleList.length !== 4) {
             return;
         }
-        // We will need create the new newspaper
-        articleList.forEach(article => {
-            const fullArticle = {
-                articleNumber: article.articleNumber,
-                articleTitle: article.articleTitle,
-                articleText: article.articleText,
-                articlePassword: articleBaseInfo.articlePassword,
-                uid: articleBaseInfo.user
-            };
-            addDoc(collection(db, "articles"), fullArticle);
-        });
-        const userPage = {
-            pagePassword: articleBaseInfo.articlePassword,
-            articleTitle: articleBaseInfo.newspaperTitle,
-            uid: articleBaseInfo.user,
-            createdDate: (new Date()).toString()
+        
+        const createNewspaper = async () => {
+            const userInfoRef = doc(db, 'userInfo', articleBaseInfo.user as string);
+            const userInfoSnap = await getDoc(userInfoRef);
+            let userSubDomain = '';
+            if (userInfoSnap.exists()) {
+                // Access userInfoSnap properties here
+                userSubDomain = userInfoSnap.data().subdomain;
+            }
+    
+            console.log('User Sub Domain is ' + userSubDomain);
+            // We will need create the new newspaper
+            articleList.forEach(article => {
+                const fullArticle = {
+                    articleNumber: article.articleNumber,
+                    articleTitle: article.articleTitle,
+                    articleText: article.articleText,
+                    uid: articleBaseInfo.user,
+                    newspaperId: articleBaseInfo.newspaperId
+                };
+                addDoc(collection(db, "articles"), fullArticle);
+            });
+            console.log('Articles Added with newspaper id ' + articleBaseInfo.newspaperId);
+            const newspapers = {
+                password: articleBaseInfo.articlePassword,
+                title: articleBaseInfo.newspaperTitle,
+                uid: articleBaseInfo.user,
+                subdomain: userSubDomain,
+                createdDate: (new Date()).toString()
+            }
+            setDoc(doc(db, 'newspapers', articleBaseInfo.newspaperId as string), newspapers);
+            console.log('Newspaper Added');
+            //This needs to be updated
+            router.push(`${userSubDomain}/edit?password=${articleBaseInfo.articlePassword}`)
         }
-        addDoc(collection(db, 'userPage'), userPage);
-        router.push(`/edit?password=${articleBaseInfo.articlePassword}`)
+
+        createNewspaper();
         
     }, [articleBaseInfo.articlePassword, articleList, router, articleBaseInfo.user])
 

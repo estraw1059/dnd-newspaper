@@ -19,7 +19,8 @@
     "nookies": "^2.5.2",
     "react": "latest",
     "react-bootstrap": "^2.9.2",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@types/node": "latest",

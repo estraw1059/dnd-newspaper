@@ -1,11 +1,13 @@
 "use client"
 import React, { ChangeEvent, FormEvent, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { auth } from '../../firebase';
 
 export type ArticleBaseInfoObject = {
   articlePassword: string;
   newspaperTitle: string;
   user?: string;
+  newspaperId?: string;
 }
 
 export type User = {
@@ -44,7 +46,8 @@ const ArticleBaseInfo = (props: articleBaseProps) => {
       setArticleBaseInfo(baseInfo => ({ 
         articlePassword: baseInfo.articlePassword.toLocaleLowerCase(),
         newspaperTitle: baseInfo.newspaperTitle, 
-        user: user?.uid || undefined }))
+        user: user?.uid || undefined,
+        newspaperId: uuidv4()}))
       setBaseInfo(false);
     };
     return (

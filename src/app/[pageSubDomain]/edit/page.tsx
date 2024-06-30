@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from "react";
 
 
-export default function Page() {
+export default function Page({ params }: { params: { pageSubDomain: string } }) {
     const searchParams = useSearchParams();
     const [password, setPassword] = useState<string>(); 
     const router = useRouter();
@@ -33,7 +33,7 @@ export default function Page() {
       }, []);
     return (
         <div className="h-full">
-            <NewsPaperFullPageOnline password={password} editMode={true}/>
+            <NewsPaperFullPageOnline password={password} editMode={true} pageSubDomain={params.pageSubDomain}/>
         </div>
     );
 }
