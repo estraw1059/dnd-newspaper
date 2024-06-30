@@ -7,19 +7,21 @@ import { query, where, orderBy, collection, getDocs, DocumentData } from "fireba
 
 type articleDoc = {
     articleId: string;
-    articlePassword: string;
+    articlePassword: string | undefined;
     articleText: string;
     articleNumber: number;
     articleTitle: string;
+    newspaperId: string;
 }
 
 type PaperProps = {
     password: string | undefined;
+    pageSubDomain: string | undefined;
     editMode: boolean;
 }
 
 const NewsPaperFullPageOnline = (props: PaperProps) => {
-    const { password, editMode } = props;
+    const { password, editMode, pageSubDomain } = props;
     const [articles, setArticles] = useState<articleDoc[]>([]);
 
 
@@ -29,7 +31,7 @@ const NewsPaperFullPageOnline = (props: PaperProps) => {
             return;
         }
         // Fetch data and set the state within the useEffect.
-        const fetchData = async () => {
+        const fetchDataNoSubDomain = async () => {
             const q = query(collection(db, "articles"), where('articlePassword', '==', password), orderBy("articleNumber"));
             const querySnapshot = await getDocs(q);
     
@@ -43,7 +45,38 @@ const NewsPaperFullPageOnline = (props: PaperProps) => {
             await setArticles(tempDocs);
         };
     
-        fetchData(); // Call the fetchData function within the useEffect.
+        if (!pageSubDomain) {
+            //This is the old route
+            fetchDataNoSubDomain();
+            return;
+        
+        }
+
+        //This is the new route
+        const fetchDataWithSubDomain = async () => {
+            const newspaperQuery = query(collection(db, "newspapers"), where('password', '==', password), where('subdomain', '==', pageSubDomain));
+            const querySnapshot = await getDocs(newspaperQuery);
+            // If Size is 0 we didn't find anything. Return and move on
+            if (querySnapshot.size === 0) {
+                setArticles([]);
+                return;
+            }
+            // We should only have one domain/password combo.
+            // I haven't written the enforcing of that yet but we will later
+            const newspaperId = querySnapshot.docs[0].id;
+
+            const articleQuery = query(collection(db, "articles"), where('newspaperId', '==', newspaperId), orderBy("articleNumber"));
+            const articleSnapshot = await getDocs(articleQuery);
+            const tempDocs: articleDoc[] = [];
+            articleSnapshot.forEach((doc: DocumentData) => {
+                tempDocs.push({
+                    articleId: doc.id,
+                    ...doc.data()
+                });
+            });
+            await setArticles(tempDocs);
+        };
+        fetchDataWithSubDomain();
     
     }, [password]);
 
