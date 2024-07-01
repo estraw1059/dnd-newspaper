@@ -9,8 +9,9 @@ import { Container } from "react-bootstrap";
 
 type UserArticle = {
   createdDate: string;
-  pagePassword: string;
-  articleTitle: string;
+  password: string;
+  subdomain: string;
+  title: string;
   uid: string;
 }
 
@@ -28,7 +29,7 @@ export default function Page() {
         router.push("/login");
         return;
       }
-      const q = query(collection(db, "userPage"), where('uid', '==', userUID));
+      const q = query(collection(db, "newspapers"), where('uid', '==', userUID));
       const querySnapshot = await getDocs(q);
       const tempDocs: UserArticle[] = [];
       querySnapshot.forEach((doc: DocumentData) => {
@@ -45,7 +46,7 @@ export default function Page() {
     <Container className="flex flex-col items-center bg-white h-screen p-10">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
         {userArticles.map((article, key) => {
-          return (<UserArticleCard key={key} newsPaperTitle={article.articleTitle} password={article.pagePassword} createdDate={article.createdDate} />)
+          return (<UserArticleCard key={key} newsPaperTitle={article.title} password={article.password} createdDate={article.createdDate} subdomain={article.subdomain} />)
         })}
       </div>
     </Container>
